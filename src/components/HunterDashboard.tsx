@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Hunter, DailyProgress, RANK_NAMES } from '@/types/game';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -5,7 +6,10 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { MissionList } from './MissionList';
 import { HunterStats } from './HunterStats';
-import { Trophy, Calendar, Target, LogOut } from 'lucide-react';
+import { NotesApp } from './NotesApp';
+import { HunterRoom } from './HunterRoom';
+import { useHunterRoom } from '@/hooks/useHunterRoom';
+import { Trophy, Calendar, Target, LogOut, FileText, Home as HomeIcon } from 'lucide-react';
 
 interface HunterDashboardProps {
   hunter: Hunter;
@@ -20,6 +24,8 @@ export function HunterDashboard({
   onCompleteMission,
   onLogout
 }: HunterDashboardProps) {
+  const [activeTab, setActiveTab] = useState<'missions' | 'notes' | 'hunter-room'>('missions');
+  const { getHunterRoomXP } = useHunterRoom();
   const xpPercentage = (hunter.xp / hunter.xpToNextLevel) * 100;
   const completedMissions = dailyProgress.missions.filter(m => m.completed).length;
   const totalMissions = dailyProgress.missions.length;
@@ -34,14 +40,42 @@ export function HunterDashboard({
           </h1>
           <p className="text-muted-foreground">Portal do Caçador</p>
         </div>
-        <Button
-          variant="outline"
-          onClick={onLogout}
-          className="border-destructive/30 text-destructive hover:bg-destructive/10"
-        >
-          <LogOut className="w-4 h-4 mr-2" />
-          Logout
-        </Button>
+        <div className="flex items-center gap-4">
+          <div className="flex bg-muted rounded-lg p-1">
+            <Button
+              variant={activeTab === 'missions' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => setActiveTab('missions')}
+            >
+              <Target className="w-4 h-4 mr-2" />
+              Missões
+            </Button>
+            <Button
+              variant={activeTab === 'notes' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => setActiveTab('notes')}
+            >
+              <FileText className="w-4 h-4 mr-2" />
+              Notas
+            </Button>
+            <Button
+              variant={activeTab === 'hunter-room' ? 'default' : 'ghost'}
+              size="sm"
+              onClick={() => setActiveTab('hunter-room')}
+            >
+              <HomeIcon className="w-4 h-4 mr-2" />
+              Sala do Caçador
+            </Button>
+          </div>
+          <Button
+            variant="outline"
+            onClick={onLogout}
+            className="border-destructive/30 text-destructive hover:bg-destructive/10"
+          >
+            <LogOut className="w-4 h-4 mr-2" />
+            Logout
+          </Button>
+        </div>
       </div>
 
       {/* Hunter Profile */}
@@ -111,19 +145,29 @@ export function HunterDashboard({
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Missions */}
+        {/* Dynamic Content */}
         <div className="lg:col-span-2">
-          <MissionList
-            missions={dailyProgress.missions}
-            onCompleteMission={onCompleteMission}
-            isAllCompleted={dailyProgress.completed}
-          />
+          {activeTab === 'missions' && (
+            <MissionList
+              missions={dailyProgress.missions}
+              onCompleteMission={onCompleteMission}
+              isAllCompleted={dailyProgress.completed}
+            />
+          )}
+          {activeTab === 'notes' && (
+            <NotesApp additionalXP={getHunterRoomXP()} />
+          )}
+          {activeTab === 'hunter-room' && (
+            <HunterRoom />
+          )}
         </div>
 
-        {/* Stats */}
-        <div>
-          <HunterStats stats={hunter.stats} />
-        </div>
+        {/* Stats - only show on missions tab */}
+        {activeTab === 'missions' && (
+          <div>
+            <HunterStats stats={hunter.stats} />
+          </div>
+        )}
       </div>
 
       {/* Daily Complete Effect */}
