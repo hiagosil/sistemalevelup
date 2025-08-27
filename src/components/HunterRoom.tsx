@@ -122,26 +122,25 @@ export function HunterRoom() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="text-center space-y-2">
-        <h2 className="text-3xl font-orbitron font-bold magic-text">
+      <div className="text-center space-y-1">
+        <h2 className="text-lg font-orbitron font-bold magic-text">
           🏛️ Sala do Caçador
         </h2>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          Este é seu espaço de autodesenvolvimento. Defina objetivos, reconheça suas qualidades 
-          e identifique áreas de melhoria para evoluir continuamente.
+        <p className="text-xs text-muted-foreground">
+          Espaço de autodesenvolvimento e evolução
         </p>
-        <div className="text-sm text-primary font-medium">
-          XP da Sala do Caçador: {getHunterRoomXP()}
+        <div className="text-xs text-primary font-medium">
+          XP da Sala: {getHunterRoomXP()}
         </div>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-3">
         {/* Objetivos */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between">
+        <Card className="magic-card">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center justify-between text-sm">
               <span className="flex items-center gap-2">
-                <Target className="w-5 h-5" />
+                <Target className="w-4 h-4" />
                 Objetivos
               </span>
               <Dialog open={isGoalDialogOpen} onOpenChange={setIsGoalDialogOpen}>
@@ -275,14 +274,14 @@ export function HunterRoom() {
         </Card>
 
         {/* Pontos Fortes */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-green-600" />
+        <Card className="magic-card">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2 text-sm">
+              <TrendingUp className="w-4 h-4 text-green-600" />
               Pontos Fortes
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-3 pt-2">
             <div className="flex gap-2">
               <Input
                 placeholder="Ex: Disciplina, Criatividade, Liderança..."
@@ -324,14 +323,14 @@ export function HunterRoom() {
         </Card>
 
         {/* Pontos Fracos */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingDown className="w-5 h-5 text-red-600" />
+        <Card className="magic-card">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2 text-sm">
+              <TrendingDown className="w-4 h-4 text-red-600" />
               Pontos Fracos
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-3 pt-2">
             <div className="flex gap-2">
               <Input
                 placeholder="Ex: Procrastinação, Impaciência, Desorganização..."
@@ -373,11 +372,11 @@ export function HunterRoom() {
         </Card>
 
         {/* Relatórios */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between">
+        <Card className="magic-card">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center justify-between text-sm">
               <span className="flex items-center gap-2">
-                <BarChart3 className="w-5 h-5" />
+                <BarChart3 className="w-4 h-4" />
                 Relatórios
               </span>
               <Button onClick={generateWeeklyReport} size="sm">

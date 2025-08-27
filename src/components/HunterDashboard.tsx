@@ -37,8 +37,8 @@ export function HunterDashboard({
       {/* Header */}
       <div className="flex justify-between items-start">
         <div>
-          <h1 className="text-xl font-orbitron font-black text-primary magic-text">
-            SISTEMA LEVEL UP
+          <h1 className="text-lg font-orbitron font-black text-primary magic-text leading-tight">
+            SISTEMA<br />LEVEL UP
           </h1>
           <p className="text-xs text-muted-foreground">Portal do Caçador</p>
         </div>
@@ -101,12 +101,14 @@ export function HunterDashboard({
         <CardHeader className="pb-3">
           <div className="flex justify-between items-center">
             <div>
-              <CardTitle className="text-lg font-orbitron magic-text">
-                {hunter.name}
-                <Badge variant="rank" className="ml-2 text-xs">
+              <div className="flex items-center gap-2">
+                <CardTitle className="text-lg font-orbitron magic-text">
+                  {hunter.name}
+                </CardTitle>
+                <Badge variant="rank" className="text-xs">
                   {RANK_NAMES[hunter.rank]}
                 </Badge>
-              </CardTitle>
+              </div>
               <div className="flex gap-3 text-xs text-muted-foreground mt-1">
                 <span>Idade: {hunter.age}</span>
                 <span>Peso: {hunter.weight}kg</span>
@@ -173,7 +175,9 @@ export function HunterDashboard({
             />
           )}
           {activeTab === 'notes' && (
-            <NotesApp additionalXP={getHunterRoomXP()} />
+            <div className="lg:col-span-3">
+              <NotesApp additionalXP={getHunterRoomXP()} />
+            </div>
           )}
           {activeTab === 'hunter-room' && (
             <HunterRoom />
