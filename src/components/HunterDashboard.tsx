@@ -33,51 +33,62 @@ export function HunterDashboard({
   const totalMissions = dailyProgress.missions.length;
 
   return (
-    <div className="min-h-screen bg-background p-4 space-y-6">
+    <div className="min-h-screen bg-background p-2 space-y-3">
       {/* Header */}
       <div className="flex justify-between items-start">
         <div>
-          <h1 className="text-3xl font-orbitron font-black text-primary magic-text">
+          <h1 className="text-xl font-orbitron font-black text-primary magic-text">
             SISTEMA LEVEL UP
           </h1>
-          <p className="text-muted-foreground">Portal do Caçador</p>
+          <p className="text-xs text-muted-foreground">Portal do Caçador</p>
         </div>
         <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
           <SheetTrigger asChild>
-            <Button variant="outline" size="icon">
-              <Menu className="w-4 h-4" />
+            <Button variant="outline" size="sm">
+              <Menu className="w-3 h-3" />
             </Button>
           </SheetTrigger>
           <SheetContent>
-            <div className="flex flex-col space-y-4 mt-6">
+            <div className="flex flex-col space-y-3 mt-4">
+              <Button
+                variant={activeTab === 'hunter-room' ? 'default' : 'ghost'}
+                className="w-full justify-start text-sm"
+                onClick={() => {
+                  setActiveTab('hunter-room');
+                  setIsMenuOpen(false);
+                }}
+              >
+                <HomeIcon className="w-3 h-3 mr-2" />
+                Sala do Caçador
+              </Button>
               <Button
                 variant={activeTab === 'missions' ? 'default' : 'ghost'}
-                className="w-full justify-start"
+                className="w-full justify-start text-sm"
                 onClick={() => {
                   setActiveTab('missions');
                   setIsMenuOpen(false);
                 }}
               >
-                <Target className="w-4 h-4 mr-2" />
+                <Target className="w-3 h-3 mr-2" />
                 Missões
               </Button>
               <Button
                 variant={activeTab === 'notes' ? 'default' : 'ghost'}
-                className="w-full justify-start"
+                className="w-full justify-start text-sm"
                 onClick={() => {
                   setActiveTab('notes');
                   setIsMenuOpen(false);
                 }}
               >
-                <FileText className="w-4 h-4 mr-2" />
+                <FileText className="w-3 h-3 mr-2" />
                 Bloco de Notas
               </Button>
               <Button
                 variant="outline"
-                className="w-full justify-start border-destructive/30 text-destructive hover:bg-destructive/10"
+                className="w-full justify-start text-sm border-destructive/30 text-destructive hover:bg-destructive/10"
                 onClick={onLogout}
               >
-                <LogOut className="w-4 h-4 mr-2" />
+                <LogOut className="w-3 h-3 mr-2" />
                 Sair
               </Button>
             </div>
@@ -87,71 +98,71 @@ export function HunterDashboard({
 
       {/* Hunter Profile */}
       <Card className="magic-card-intense">
-        <CardHeader>
+        <CardHeader className="pb-3">
           <div className="flex justify-between items-center">
             <div>
-              <CardTitle className="text-2xl font-orbitron magic-text">
+              <CardTitle className="text-lg font-orbitron magic-text">
                 {hunter.name}
-                <Badge variant="rank" className="ml-3">
+                <Badge variant="rank" className="ml-2 text-xs">
                   {RANK_NAMES[hunter.rank]}
                 </Badge>
               </CardTitle>
-              <div className="flex gap-4 text-sm text-muted-foreground mt-2">
+              <div className="flex gap-3 text-xs text-muted-foreground mt-1">
                 <span>Idade: {hunter.age}</span>
                 <span>Peso: {hunter.weight}kg</span>
                 <span>Criado: {new Date(hunter.createdAt).toLocaleDateString()}</span>
               </div>
             </div>
             <div className="text-right">
-              <div className="text-3xl font-orbitron font-black text-primary magic-text">
+              <div className="text-xl font-orbitron font-black text-primary magic-text">
                 LV.{hunter.level}
               </div>
-              <div className="text-sm text-muted-foreground">
+              <div className="text-xs text-muted-foreground">
                 {hunter.xp}/{hunter.xpToNextLevel} XP
               </div>
             </div>
           </div>
         </CardHeader>
         
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-3 pt-0">
           {/* XP Progress */}
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
+          <div className="space-y-1">
+            <div className="flex justify-between text-xs">
               <span className="text-primary font-medium">Progresso para próximo nível</span>
               <span className="text-muted-foreground">{xpPercentage.toFixed(1)}%</span>
             </div>
-            <Progress value={xpPercentage} className="h-3" />
+            <Progress value={xpPercentage} className="h-2" />
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
+          <div className="grid grid-cols-3 gap-3 pt-2 border-t border-border">
             <div className="text-center">
               <div className="flex items-center justify-center mb-1">
-                <Trophy className="w-4 h-4 text-vitality mr-1" />
-                <span className="text-sm text-muted-foreground">Dias</span>
+                <Trophy className="w-3 h-3 text-vitality mr-1" />
+                <span className="text-xs text-muted-foreground">Dias</span>
               </div>
-              <div className="text-2xl font-bold text-vitality">{hunter.completedDays}</div>
+              <div className="text-lg font-bold text-vitality">{hunter.completedDays}</div>
             </div>
             <div className="text-center">
               <div className="flex items-center justify-center mb-1">
-                <Target className="w-4 h-4 text-intelligence mr-1" />
-                <span className="text-sm text-muted-foreground">Missões</span>
+                <Target className="w-3 h-3 text-intelligence mr-1" />
+                <span className="text-xs text-muted-foreground">Missões</span>
               </div>
-              <div className="text-2xl font-bold text-intelligence">{hunter.totalMissionsCompleted}</div>
+              <div className="text-lg font-bold text-intelligence">{hunter.totalMissionsCompleted}</div>
             </div>
             <div className="text-center">
               <div className="flex items-center justify-center mb-1">
-                <Calendar className="w-4 h-4 text-strength mr-1" />
-                <span className="text-sm text-muted-foreground">Hoje</span>
+                <Calendar className="w-3 h-3 text-strength mr-1" />
+                <span className="text-xs text-muted-foreground">Hoje</span>
               </div>
-              <div className="text-2xl font-bold text-strength">{completedMissions}/{totalMissions}</div>
+              <div className="text-lg font-bold text-strength">{completedMissions}/{totalMissions}</div>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {/* Dynamic Content */}
         <div className="lg:col-span-2">
           {activeTab === 'missions' && (
