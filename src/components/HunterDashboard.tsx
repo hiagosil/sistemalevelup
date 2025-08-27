@@ -9,7 +9,8 @@ import { HunterStats } from './HunterStats';
 import { NotesApp } from './NotesApp';
 import { HunterRoom } from './HunterRoom';
 import { useHunterRoom } from '@/hooks/useHunterRoom';
-import { Trophy, Calendar, Target, LogOut, FileText, Home as HomeIcon } from 'lucide-react';
+import { Trophy, Calendar, Target, LogOut, FileText, Home as HomeIcon, Menu } from 'lucide-react';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 interface HunterDashboardProps {
   hunter: Hunter;
@@ -24,7 +25,8 @@ export function HunterDashboard({
   onCompleteMission,
   onLogout
 }: HunterDashboardProps) {
-  const [activeTab, setActiveTab] = useState<'missions' | 'notes' | 'hunter-room'>('missions');
+  const [activeTab, setActiveTab] = useState<'missions' | 'notes' | 'hunter-room'>('hunter-room');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { getHunterRoomXP } = useHunterRoom();
   const xpPercentage = (hunter.xp / hunter.xpToNextLevel) * 100;
   const completedMissions = dailyProgress.missions.filter(m => m.completed).length;
@@ -40,42 +42,47 @@ export function HunterDashboard({
           </h1>
           <p className="text-muted-foreground">Portal do Caçador</p>
         </div>
-        <div className="flex items-center gap-4">
-          <div className="flex bg-muted rounded-lg p-1">
-            <Button
-              variant={activeTab === 'missions' ? 'default' : 'ghost'}
-              size="sm"
-              onClick={() => setActiveTab('missions')}
-            >
-              <Target className="w-4 h-4 mr-2" />
-              Missões
+        <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+          <SheetTrigger asChild>
+            <Button variant="outline" size="icon">
+              <Menu className="w-4 h-4" />
             </Button>
-            <Button
-              variant={activeTab === 'notes' ? 'default' : 'ghost'}
-              size="sm"
-              onClick={() => setActiveTab('notes')}
-            >
-              <FileText className="w-4 h-4 mr-2" />
-              Notas
-            </Button>
-            <Button
-              variant={activeTab === 'hunter-room' ? 'default' : 'ghost'}
-              size="sm"
-              onClick={() => setActiveTab('hunter-room')}
-            >
-              <HomeIcon className="w-4 h-4 mr-2" />
-              Sala do Caçador
-            </Button>
-          </div>
-          <Button
-            variant="outline"
-            onClick={onLogout}
-            className="border-destructive/30 text-destructive hover:bg-destructive/10"
-          >
-            <LogOut className="w-4 h-4 mr-2" />
-            Logout
-          </Button>
-        </div>
+          </SheetTrigger>
+          <SheetContent>
+            <div className="flex flex-col space-y-4 mt-6">
+              <Button
+                variant={activeTab === 'missions' ? 'default' : 'ghost'}
+                className="w-full justify-start"
+                onClick={() => {
+                  setActiveTab('missions');
+                  setIsMenuOpen(false);
+                }}
+              >
+                <Target className="w-4 h-4 mr-2" />
+                Missões
+              </Button>
+              <Button
+                variant={activeTab === 'notes' ? 'default' : 'ghost'}
+                className="w-full justify-start"
+                onClick={() => {
+                  setActiveTab('notes');
+                  setIsMenuOpen(false);
+                }}
+              >
+                <FileText className="w-4 h-4 mr-2" />
+                Bloco de Notas
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full justify-start border-destructive/30 text-destructive hover:bg-destructive/10"
+                onClick={onLogout}
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                Sair
+              </Button>
+            </div>
+          </SheetContent>
+        </Sheet>
       </div>
 
       {/* Hunter Profile */}

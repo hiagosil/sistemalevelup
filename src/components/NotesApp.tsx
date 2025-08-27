@@ -28,6 +28,7 @@ export function NotesApp({ additionalXP = 0 }: NotesAppProps) {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingNote, setEditingNote] = useState<Note | undefined>();
+  const [showStats, setShowStats] = useState(false);
 
   const handleCreateNote = () => {
     setEditingNote(undefined);
@@ -75,23 +76,29 @@ export function NotesApp({ additionalXP = 0 }: NotesAppProps) {
           </p>
         </div>
         
-        {allNotes.length > 0 && (
-          <Button onClick={handleCreateNote} className="font-medium">
-            <Plus className="w-4 h-4 mr-2" />
-            Nova Nota
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            onClick={() => setShowStats(!showStats)}
+            size="sm"
+          >
+            Estatísticas
           </Button>
-        )}
+          {allNotes.length > 0 && (
+            <Button onClick={handleCreateNote} className="font-medium">
+              <Plus className="w-4 h-4 mr-2" />
+              Nova Nota
+            </Button>
+          )}
+        </div>
       </div>
-
-      {/* Stats Panel */}
-      <StatsPanel stats={stats} additionalXP={additionalXP} />
 
       {/* Search Bar */}
       {allNotes.length > 0 && (
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
-            placeholder="Buscar notas por título ou conteúdo..."
+            placeholder="Buscar por notas..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10 pr-10"
@@ -137,6 +144,9 @@ export function NotesApp({ additionalXP = 0 }: NotesAppProps) {
           ))}
         </div>
       )}
+
+      {/* Stats Panel */}
+      {showStats && <StatsPanel stats={stats} additionalXP={additionalXP} />}
 
       {/* Search Results Info */}
       {searchQuery && notes.length > 0 && (
