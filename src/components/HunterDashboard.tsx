@@ -83,14 +83,6 @@ export function HunterDashboard({
                 <FileText className="w-3 h-3 mr-2" />
                 Bloco de Notas
               </Button>
-              <Button
-                variant="outline"
-                className="w-full justify-start text-sm border-destructive/30 text-destructive hover:bg-destructive/10"
-                onClick={onLogout}
-              >
-                <LogOut className="w-3 h-3 mr-2" />
-                Sair
-              </Button>
             </div>
           </SheetContent>
         </Sheet>
