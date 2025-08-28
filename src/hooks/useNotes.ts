@@ -94,10 +94,14 @@ export function useNotes() {
   };
 
   const getFilteredNotes = () => {
-    if (!searchQuery.trim()) return notes;
+    const sortedNotes = [...notes].sort((a, b) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+    
+    if (!searchQuery.trim()) return sortedNotes;
     
     const query = searchQuery.toLowerCase();
-    return notes.filter(note =>
+    return sortedNotes.filter(note =>
       note.title.toLowerCase().includes(query) ||
       note.content.toLowerCase().includes(query)
     );

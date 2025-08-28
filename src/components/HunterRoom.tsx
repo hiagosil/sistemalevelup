@@ -212,59 +212,55 @@ export function HunterRoom() {
             ) : (
               <div className="space-y-3">
                 {hunterRoom.goals.map((goal) => (
-                  <div key={goal.id} className="p-4 border rounded-lg space-y-3">
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <h4 className="font-semibold">{goal.title}</h4>
-                          <Badge className={`text-xs ${getStatusColor(goal.status)}`}>
-                            {getStatusIcon(goal.status)}
-                            <span className="ml-1">
-                              {goal.status === 'progress' && 'Em Andamento'}
-                              {goal.status === 'completed' && 'Concluído'}
-                              {goal.status === 'abandoned' && 'Abandonado'}
-                            </span>
-                          </Badge>
-                          <Badge variant="outline" className="text-xs">
-                            {getGoalTypeLabel(goal.type)}
-                          </Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-2">{goal.description}</p>
-                        <div className="text-xs text-muted-foreground flex items-center gap-1">
-                          <Calendar className="w-3 h-3" />
-                          Criado {formatDistanceToNow(new Date(goal.createdAt), { addSuffix: true, locale: ptBR })}
-                        </div>
-                      </div>
-                      <div className="flex gap-1">
-                        {goal.status === 'progress' && (
-                          <>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => updateGoalStatus(goal.id, 'completed')}
-                              className="text-green-600 hover:bg-green-50"
-                            >
-                              Concluir
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => updateGoalStatus(goal.id, 'abandoned')}
-                              className="text-red-600 hover:bg-red-50"
-                            >
-                              Abandonar
-                            </Button>
-                          </>
-                        )}
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => deleteGoal(goal.id)}
-                          className="hover:bg-destructive/10 hover:text-destructive"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
+                  <div key={goal.id} className="p-3 border rounded-lg space-y-2">
+                    <div className="flex items-center gap-2 mb-2">
+                      <h4 className="font-semibold text-sm">{goal.title}</h4>
+                      <Badge className={`text-xs ${getStatusColor(goal.status)}`}>
+                        {getStatusIcon(goal.status)}
+                        <span className="ml-1">
+                          {goal.status === 'progress' && 'Em Andamento'}
+                          {goal.status === 'completed' && 'Concluído'}
+                          {goal.status === 'abandoned' && 'Abandonado'}
+                        </span>
+                      </Badge>
+                      <Badge variant="outline" className="text-xs">
+                        {getGoalTypeLabel(goal.type)}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground">{goal.description}</p>
+                    <div className="text-xs text-muted-foreground flex items-center gap-1">
+                      <Calendar className="w-3 h-3" />
+                      Criado {formatDistanceToNow(new Date(goal.createdAt), { addSuffix: true, locale: ptBR })}
+                    </div>
+                    <div className="flex gap-2 pt-2">
+                      {goal.status === 'progress' && (
+                        <>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => updateGoalStatus(goal.id, 'completed')}
+                            className="text-green-600 hover:bg-green-50 text-xs px-2 py-1 h-7"
+                          >
+                            Concluir
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => updateGoalStatus(goal.id, 'abandoned')}
+                            className="text-red-600 hover:bg-red-50 text-xs px-2 py-1 h-7"
+                          >
+                            Abandonar
+                          </Button>
+                        </>
+                      )}
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => deleteGoal(goal.id)}
+                        className="hover:bg-destructive/10 hover:text-destructive text-xs px-2 py-1 h-7"
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </Button>
                     </div>
                   </div>
                 ))}
