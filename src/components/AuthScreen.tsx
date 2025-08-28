@@ -9,22 +9,31 @@ interface AuthScreenProps {
 }
 
 export function AuthScreen({ onCreateHunter }: AuthScreenProps) {
+  const [step, setStep] = useState<1 | 2>(1);
   const [formData, setFormData] = useState({
     name: '',
+    email: '',
+    password: '',
     age: '',
     weight: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (formData.name && formData.age && formData.weight) {
-      onCreateHunter(
-        formData.name,
-        parseInt(formData.age),
-        parseFloat(formData.weight)
-      );
+const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
+  if (step === 1) {
+    if (formData.name && formData.email && formData.password) {
+      setStep(2);
     }
-  };
+    return;
+  }
+  if (formData.name && formData.age && formData.weight) {
+    onCreateHunter(
+      formData.name,
+      parseInt(formData.age),
+      parseFloat(formData.weight)
+    );
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
@@ -56,64 +65,109 @@ export function AuthScreen({ onCreateHunter }: AuthScreenProps) {
           
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="name" className="text-primary font-medium">
-                  Nome do Caçador
-                </Label>
-                <Input
-                  id="name"
-                  placeholder="Digite seu nome épico..."
-                  value={formData.name}
-                  onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                  className="bg-muted border-primary/30 focus:border-primary glow-secondary"
-                  required
-                />
-              </div>
+              {step === 1 ? (
+                <>
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="text-primary font-medium">
+                      Nome do Caçador
+                    </Label>
+                    <Input
+                      id="name"
+                      placeholder="Digite seu nome épico..."
+                      value={formData.name}
+                      onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                      className="bg-muted border-primary/30 focus:border-primary glow-secondary"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-primary font-medium">
+                      E-mail
+                    </Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="seu@email.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                      className="bg-muted border-primary/30 focus:border-primary"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="password" className="text-primary font-medium">
+                      Senha
+                    </Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="Crie uma senha"
+                      value={formData.password}
+                      onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
+                      className="bg-muted border-primary/30 focus:border-primary"
+                      required
+                      minLength={4}
+                    />
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Obs.: E-mail e senha não são salvos. Apenas o nome será usado no jogo.
+                  </p>
+                  <Button
+                    type="submit"
+                    className="w-full bg-gradient-magic hover:glow-primary font-orbitron font-bold text-lg py-6 relative overflow-hidden group"
+                  >
+                    <span className="relative z-10">Continuar</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary-glow to-primary opacity-0 group-hover:opacity-20 transition-opacity" />
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="age" className="text-primary font-medium">
+                        Idade
+                      </Label>
+                      <Input
+                        id="age"
+                        type="number"
+                        placeholder="25"
+                        value={formData.age}
+                        onChange={(e) => setFormData(prev => ({ ...prev, age: e.target.value }))}
+                        className="bg-muted border-primary/30 focus:border-primary"
+                        required
+                        min="13"
+                        max="100"
+                      />
+                    </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="age" className="text-primary font-medium">
-                    Idade
-                  </Label>
-                  <Input
-                    id="age"
-                    type="number"
-                    placeholder="25"
-                    value={formData.age}
-                    onChange={(e) => setFormData(prev => ({ ...prev, age: e.target.value }))}
-                    className="bg-muted border-primary/30 focus:border-primary"
-                    required
-                    min="13"
-                    max="100"
-                  />
-                </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="weight" className="text-primary font-medium">
+                        Peso (kg)
+                      </Label>
+                      <Input
+                        id="weight"
+                        type="number"
+                        step="0.1"
+                        placeholder="70.0"
+                        value={formData.weight}
+                        onChange={(e) => setFormData(prev => ({ ...prev, weight: e.target.value }))}
+                        className="bg-muted border-primary/30 focus:border-primary"
+                        required
+                        min="30"
+                        max="300"
+                      />
+                    </div>
+                  </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="weight" className="text-primary font-medium">
-                    Peso (kg)
-                  </Label>
-                  <Input
-                    id="weight"
-                    type="number"
-                    step="0.1"
-                    placeholder="70.0"
-                    value={formData.weight}
-                    onChange={(e) => setFormData(prev => ({ ...prev, weight: e.target.value }))}
-                    className="bg-muted border-primary/30 focus:border-primary"
-                    required
-                    min="30"
-                    max="300"
-                  />
-                </div>
-              </div>
-
-              <Button
-                type="submit"
-                className="w-full bg-gradient-magic hover:glow-primary font-orbitron font-bold text-lg py-6 relative overflow-hidden group"
-              >
-                <span className="relative z-10">✨ DESPERTAR PODERES</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary-glow to-primary opacity-0 group-hover:opacity-20 transition-opacity" />
-              </Button>
+                  <Button
+                    type="submit"
+                    className="w-full bg-gradient-magic hover:glow-primary font-orbitron font-bold text-lg py-6 relative overflow-hidden group"
+                  >
+                    <span className="relative z-10">✨ DESPERTAR PODERES</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary-glow to-primary opacity-0 group-hover:opacity-20 transition-opacity" />
+                  </Button>
+                </>
+              )}
             </form>
 
             <div className="mt-6 p-4 bg-muted/30 rounded-lg border border-primary/20">
