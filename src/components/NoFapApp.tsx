@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Trophy, Shield, Target, Flame, Clock, AlertTriangle, RefreshCw } from 'lucide-react';
+import { Trophy, Shield, Target, Flame, Clock, AlertTriangle, RefreshCw, Crown, Star, Zap, Award, Swords, Medal } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface NoFapData {
@@ -26,14 +26,14 @@ const MOTIVATIONAL_QUOTES = [
 ];
 
 const STREAK_LEVELS = [
-  { days: 0, title: "Iniciante", color: "text-muted-foreground", icon: "🔰" },
-  { days: 3, title: "Determinado", color: "text-blue-400", icon: "💙" },
-  { days: 7, title: "Guerreiro", color: "text-green-400", icon: "⚔️" },
-  { days: 14, title: "Disciplinado", color: "text-yellow-400", icon: "🏅" },
-  { days: 30, title: "Mestre", color: "text-purple-400", icon: "👑" },
-  { days: 60, title: "Lendário", color: "text-orange-400", icon: "🔥" },
-  { days: 90, title: "Transcendente", color: "text-primary", icon: "✨" },
-  { days: 365, title: "Imortal", color: "text-vitality", icon: "🏆" },
+  { days: 0, title: "Iniciante", color: "text-muted-foreground", icon: Shield },
+  { days: 3, title: "Determinado", color: "text-blue-400", icon: Target },
+  { days: 7, title: "Guerreiro", color: "text-green-400", icon: Swords },
+  { days: 14, title: "Disciplinado", color: "text-yellow-400", icon: Medal },
+  { days: 30, title: "Mestre", color: "text-purple-400", icon: Crown },
+  { days: 60, title: "Lendário", color: "text-orange-400", icon: Flame },
+  { days: 90, title: "Transcendente", color: "text-primary", icon: Star },
+  { days: 365, title: "Imortal", color: "text-vitality", icon: Trophy },
 ];
 
 export function NoFapApp() {
@@ -73,7 +73,7 @@ export function NoFapApp() {
   const nextLevel = STREAK_LEVELS.find(level => days < level.days);
   const progressToNext = nextLevel ? (days / nextLevel.days) * 100 : 100;
 
-  const randomQuote = MOTIVATIONAL_QUOTES[Math.floor(Math.random() * MOTIVATIONAL_QUOTES.length)];
+  const fixedQuote = "A disciplina é a ponte entre metas e realizações.";
 
   const startChallenge = () => {
     setNoFapData({
@@ -122,7 +122,7 @@ export function NoFapApp() {
             </p>
           </CardHeader>
           <CardContent className="text-center space-y-6">
-            <div className="text-6xl mb-4">🛡️</div>
+            <Shield className="w-24 h-24 text-primary mx-auto mb-4" />
             
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-primary">Pronto para o desafio?</h3>
@@ -161,7 +161,7 @@ export function NoFapApp() {
         <Card className="border-primary/20">
           <CardContent className="p-4 text-center">
             <blockquote className="text-primary italic font-medium">
-              "{randomQuote}"
+              "{fixedQuote}"
             </blockquote>
           </CardContent>
         </Card>
@@ -180,8 +180,9 @@ export function NoFapApp() {
               STREAK ATIVO
             </CardTitle>
           </div>
-          <Badge variant="outline" className={`${currentLevel.color} border-current`}>
-            {currentLevel.icon} {currentLevel.title}
+          <Badge variant="outline" className={`${currentLevel.color} border-current flex items-center gap-1`}>
+            <currentLevel.icon className="w-4 h-4" />
+            {currentLevel.title}
           </Badge>
         </CardHeader>
         
@@ -265,9 +266,9 @@ export function NoFapApp() {
       {/* Motivational Section */}
       <Card className="border-primary/20">
         <CardContent className="p-4 text-center">
-          <div className="text-2xl mb-2">💪</div>
+          <Zap className="w-8 h-8 text-primary mx-auto mb-2" />
           <blockquote className="text-primary italic font-medium mb-2">
-            "{randomQuote}"
+            "{fixedQuote}"
           </blockquote>
           <p className="text-xs text-muted-foreground">
             Cada segundo que passa é uma prova da sua força interior.
@@ -278,26 +279,32 @@ export function NoFapApp() {
       {/* Achievement Milestones */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg font-orbitron">🏆 Marcos de Conquista</CardTitle>
+          <CardTitle className="text-lg font-orbitron flex items-center gap-2">
+            <Award className="w-5 h-5 text-primary" />
+            Marcos de Conquista
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {STREAK_LEVELS.map((level, index) => (
-              <div key={index} className="flex items-center gap-3 p-2 rounded-lg bg-muted/20">
-                <div className="text-2xl">{level.icon}</div>
-                <div className="flex-1">
-                  <div className={`font-medium ${level.days <= days ? level.color : 'text-muted-foreground'}`}>
-                    {level.title}
+            {STREAK_LEVELS.map((level, index) => {
+              const IconComponent = level.icon;
+              return (
+                <div key={index} className="flex items-center gap-3 p-2 rounded-lg bg-muted/20">
+                  <IconComponent className={`w-6 h-6 ${level.days <= days ? level.color : 'text-muted-foreground'}`} />
+                  <div className="flex-1">
+                    <div className={`font-medium ${level.days <= days ? level.color : 'text-muted-foreground'}`}>
+                      {level.title}
+                    </div>
+                    <div className="text-xs text-muted-foreground">{level.days} dias</div>
                   </div>
-                  <div className="text-xs text-muted-foreground">{level.days} dias</div>
+                  {level.days <= days && (
+                    <Badge variant="outline" className="text-primary border-primary">
+                      ✓ Conquistado
+                    </Badge>
+                  )}
                 </div>
-                {level.days <= days && (
-                  <Badge variant="outline" className="text-primary border-primary">
-                    ✓ Conquistado
-                  </Badge>
-                )}
-              </div>
-            ))}
+              );
+            })}
           </div>
         </CardContent>
       </Card>
