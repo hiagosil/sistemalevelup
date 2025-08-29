@@ -9,8 +9,9 @@ import { HunterStats } from './HunterStats';
 import { NotesApp } from './NotesApp';
 import { HunterRoom } from './HunterRoom';
 import { NutritionApp } from './NutritionApp';
+import { NoFapApp } from './NoFapApp';
 import { useHunterRoom } from '@/hooks/useHunterRoom';
-import { Trophy, Calendar, Target, LogOut, FileText, Home as HomeIcon, Menu, Utensils } from 'lucide-react';
+import { Trophy, Calendar, Target, LogOut, FileText, Home as HomeIcon, Menu, Utensils, Shield } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 interface HunterDashboardProps {
@@ -26,7 +27,7 @@ export function HunterDashboard({
   onCompleteMission,
   onLogout
 }: HunterDashboardProps) {
-  const [activeTab, setActiveTab] = useState<'missions' | 'notes' | 'hunter-room' | 'nutrition'>('hunter-room');
+  const [activeTab, setActiveTab] = useState<'missions' | 'notes' | 'hunter-room' | 'nutrition' | 'nofap'>('hunter-room');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { getHunterRoomXP } = useHunterRoom();
   const xpPercentage = (hunter.xp / hunter.xpToNextLevel) * 100;
@@ -94,6 +95,17 @@ export function HunterDashboard({
               >
                 <Utensils className="w-3 h-3 mr-2" />
                 Alimentação
+              </Button>
+              <Button
+                variant={activeTab === 'nofap' ? 'default' : 'ghost'}
+                className="w-full justify-start text-sm"
+                onClick={() => {
+                  setActiveTab('nofap');
+                  setIsMenuOpen(false);
+                }}
+              >
+                <Shield className="w-3 h-3 mr-2" />
+                NoFap
               </Button>
             </div>
           </SheetContent>
@@ -188,6 +200,9 @@ export function HunterDashboard({
           )}
           {activeTab === 'nutrition' && (
             <NutritionApp />
+          )}
+          {activeTab === 'nofap' && (
+            <NoFapApp />
           )}
         </div>
 

@@ -18,22 +18,22 @@ export function AuthScreen({ onCreateHunter }: AuthScreenProps) {
     weight: '',
   });
 
-const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  if (step === 1) {
-    if (formData.name && formData.email && formData.password) {
-      setStep(2);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (step === 1) {
+      if (formData.name && formData.email && formData.password) {
+        setStep(2);
+      }
+      return;
     }
-    return;
-  }
-  if (formData.name && formData.age && formData.weight) {
-    onCreateHunter(
-      formData.name,
-      parseInt(formData.age),
-      parseFloat(formData.weight)
-    );
-  }
-};
+    if (formData.name && formData.age && formData.weight) {
+      onCreateHunter(
+        formData.name,
+        parseInt(formData.age),
+        parseFloat(formData.weight)
+      );
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
