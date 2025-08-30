@@ -99,10 +99,10 @@ export function NutritionApp() {
   };
 
   const getBMIColor = () => {
-    if (bmi < 18.5) return 'text-blue-500';
-    if (bmi < 25) return 'text-green-500';
-    if (bmi < 30) return 'text-yellow-500';
-    return 'text-red-500';
+    if (bmi < 18.5) return 'text-intelligence';
+    if (bmi < 25) return 'text-vitality';
+    if (bmi < 30) return 'text-agility';
+    return 'text-strength';
   };
 
   const getProgressPercentage = () => {
@@ -297,11 +297,11 @@ export function NutritionApp() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Coffee className="w-4 h-4 text-orange-500" />
-                      <h4 className="font-semibold text-sm">Café da Manhã</h4>
-                    </div>
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Coffee className="w-4 h-4 text-agility" />
+                        <h4 className="font-semibold text-sm">Café da Manhã</h4>
+                      </div>
                     <ul className="text-sm text-muted-foreground space-y-1 ml-6">
                       {mealPlan.breakfast.map((meal, index) => (
                         <li key={index}>• {meal}</li>
@@ -311,11 +311,11 @@ export function NutritionApp() {
 
                   <Separator />
 
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Sun className="w-4 h-4 text-yellow-500" />
-                      <h4 className="font-semibold text-sm">Almoço</h4>
-                    </div>
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Sun className="w-4 h-4 text-agility" />
+                        <h4 className="font-semibold text-sm">Almoço</h4>
+                      </div>
                     <ul className="text-sm text-muted-foreground space-y-1 ml-6">
                       {mealPlan.lunch.map((meal, index) => (
                         <li key={index}>• {meal}</li>
@@ -325,11 +325,11 @@ export function NutritionApp() {
 
                   <Separator />
 
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Moon className="w-4 h-4 text-blue-500" />
-                      <h4 className="font-semibold text-sm">Jantar</h4>
-                    </div>
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Moon className="w-4 h-4 text-intelligence" />
+                        <h4 className="font-semibold text-sm">Jantar</h4>
+                      </div>
                     <ul className="text-sm text-muted-foreground space-y-1 ml-6">
                       {mealPlan.dinner.map((meal, index) => (
                         <li key={index}>• {meal}</li>
@@ -339,11 +339,11 @@ export function NutritionApp() {
 
                   <Separator />
 
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Apple className="w-4 h-4 text-green-500" />
-                      <h4 className="font-semibold text-sm">Lanches</h4>
-                    </div>
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Apple className="w-4 h-4 text-vitality" />
+                        <h4 className="font-semibold text-sm">Lanches</h4>
+                      </div>
                     <ul className="text-sm text-muted-foreground space-y-1 ml-6">
                       {mealPlan.snacks.map((meal, index) => (
                         <li key={index}>• {meal}</li>
