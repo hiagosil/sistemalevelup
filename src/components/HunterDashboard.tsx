@@ -56,6 +56,7 @@ export function HunterDashboard({
                 variant={activeTab === 'hunter-room' ? 'default' : 'ghost'}
                 className="w-full justify-start text-sm"
                 onClick={() => {
+                  console.log('Clicou em hunter-room');
                   setActiveTab('hunter-room');
                   setIsMenuOpen(false);
                 }}
@@ -67,6 +68,7 @@ export function HunterDashboard({
                 variant={activeTab === 'missions' ? 'default' : 'ghost'}
                 className="w-full justify-start text-sm"
                 onClick={() => {
+                  console.log('Clicou em missions');
                   setActiveTab('missions');
                   setIsMenuOpen(false);
                 }}
@@ -78,6 +80,7 @@ export function HunterDashboard({
                 variant={activeTab === 'notes' ? 'default' : 'ghost'}
                 className="w-full justify-start text-sm"
                 onClick={() => {
+                  console.log('Clicou em notes');
                   setActiveTab('notes');
                   setIsMenuOpen(false);
                 }}
@@ -89,6 +92,7 @@ export function HunterDashboard({
                 variant={activeTab === 'nutrition' ? 'default' : 'ghost'}
                 className="w-full justify-start text-sm"
                 onClick={() => {
+                  console.log('Clicou em nutrition');
                   setActiveTab('nutrition');
                   setIsMenuOpen(false);
                 }}
@@ -100,6 +104,7 @@ export function HunterDashboard({
                 variant={activeTab === 'nofap' ? 'default' : 'ghost'}
                 className="w-full justify-start text-sm"
                 onClick={() => {
+                  console.log('Clicou em nofap');
                   setActiveTab('nofap');
                   setIsMenuOpen(false);
                 }}
