@@ -179,38 +179,33 @@ export function HunterDashboard({
         </CardContent>
       </Card>
 
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-        {/* Dynamic Content */}
-        <div className="lg:col-span-2">
-          {activeTab === 'missions' && (
-            <MissionList
-              missions={dailyProgress.missions}
-              onCompleteMission={onCompleteMission}
-              isAllCompleted={dailyProgress.completed}
-            />
-          )}
-          {activeTab === 'notes' && (
-            <div className="lg:col-span-3">
-              <NotesApp additionalXP={getHunterRoomXP()} />
-            </div>
-          )}
-          {activeTab === 'hunter-room' && (
-            <HunterRoom />
-          )}
-          {activeTab === 'nutrition' && (
-            <NutritionApp />
-          )}
-          {activeTab === 'nofap' && (
-            <NoFapApp />
-          )}
-        </div>
-
-        {/* Stats - only show on missions tab */}
+      {/* Main Content */}
+      <div className="space-y-3">
         {activeTab === 'missions' && (
-          <div>
-            <HunterStats stats={hunter.stats} />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+            <div className="lg:col-span-2">
+              <MissionList
+                missions={dailyProgress.missions}
+                onCompleteMission={onCompleteMission}
+                isAllCompleted={dailyProgress.completed}
+              />
+            </div>
+            <div>
+              <HunterStats stats={hunter.stats} />
+            </div>
           </div>
+        )}
+        {activeTab === 'notes' && (
+          <NotesApp additionalXP={getHunterRoomXP()} />
+        )}
+        {activeTab === 'hunter-room' && (
+          <HunterRoom />
+        )}
+        {activeTab === 'nutrition' && (
+          <NutritionApp />
+        )}
+        {activeTab === 'nofap' && (
+          <NoFapApp />
         )}
       </div>
 
